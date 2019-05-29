@@ -1,22 +1,14 @@
 "use strict";
 
-/**
- * Класс отрисовывает игровую доску 3 х 3
- *
- * @class Table
- */
+/* Доска для крестиков-ноликов сразу сверстана в html
+
 class Table {
   constructor() {
     document.querySelector("body").innerHTML = `<table class="game"></table>`; // создаю таблицу
-    this.board = document.querySelector(".game"); // присваиваю таблице класс game
+    this.board = document.querySelector(".game"); // пишу таблицу в переменную
     this.createTableBody();
   }
 
-  /**
-   * Метод заполняет таблицу ячейками 3 х 3. Каждой ячейке присваивается ее номер в ряду и в столбце
-   *
-   * @memberof Table
-   */
   createTableBody() {
     for (let i = 0; i < 3; i++) {
       let tableRow = this.board.insertRow();
@@ -27,7 +19,7 @@ class Table {
       }
     }
   }
-}
+} */
 
 
 /**
@@ -88,8 +80,7 @@ class WinnerOrLoser {
     // обработчик на всю таблицу, который при каждом клике вызывает метод fillBoard
 
     this.boardArray = [
-      /* массив для записи значений ячеек. в каждой ячейке записана цифра, чтобы избежать ложного
-      срабатывания метода checkWinner, сравнивающего содержимое ячеек между собой */
+      // массив для записи значений ячеек
       ["", "", ""],
       ["", "", ""],
       ["", "", ""]
@@ -116,37 +107,36 @@ class WinnerOrLoser {
    * @memberof WinnerOrLoser
    */
   checkWinner() {
-    this.board7 = this.boardArray[0][0] + this.boardArray[1][1] + this.boardArray[2][2]; // диагональ справа налево
-    this.board8 = this.boardArray[0][2] + this.boardArray[1][1] + this.boardArray[2][0]; //диагональ слева направо
+    this.board6 = this.boardArray[0][0] + this.boardArray[1][1] + this.boardArray[2][2]; // диагональ справа налево
+    this.board7 = this.boardArray[0][2] + this.boardArray[1][1] + this.boardArray[2][0]; //диагональ слева направо
 
-      this.everyCell = ""; // строка для подсчета символов на игровом поле (для определения ничьей)
-      for (let i = 0; i < this.boardArray.length; i++) {
-        this["board" + i] = ""; // переменные для строк
-        this["board" + (3 + i)] = ""; // переменные для столбцов
-        for (let j = 0; j < this.boardArray.length; j++) {
-          this["board" + i] += this.boardArray[i][j]; // записываю строки в переменные
-          this["board" + (3 + i)] += this.boardArray[j][i]; // записываю столбцы в переменные
-          this.everyCell += this.boardArray[i][j]; // записываю символы на игровом поле
-        }
+    this.everyCell = ""; // строка для подсчета символов на игровом поле (для определения ничьей)
+    for (let i = 0; i < this.boardArray.length; i++) {
+      this["board" + i] = ""; // переменные для строк: board0, board1, board2
+      this["board" + (3 + i)] = ""; // переменные для столбцов: board3, board4, board5
+      for (let j = 0; j < this.boardArray.length; j++) {
+        this["board" + i] += this.boardArray[i][j]; // записываю строки в переменные
+        this["board" + (3 + i)] += this.boardArray[j][i]; // записываю столбцы в переменные
+        this.everyCell += this.boardArray[i][j]; // записываю символы на игровом поле
       }
+    }
 
-      for (let i = 0; i < 8; i++) {
-        if (this["board" + i] == "XXX") { // если в одной из переменных три крестика, выиграли крестики
-          alert("Выиграли крестики!");
-          this.noPointerEvents();
-          this.playAgain();
-        } else if (this["board" + i] == "OOO") { // если в одной из переменных три нолика, выиграли нолики
-          alert("Выиграли нолики!");
-          this.noPointerEvents();
-          this.playAgain();
-        }
-      }
-
-      if (this.everyCell.length == 9) { // если все поле занято и один if выше не сработал
+    for (let i = 0; i < 8; i++) {
+      if (this["board" + i] == "XXX") { // если в одной из переменных три крестика, выиграли крестики
+        alert("Выиграли крестики!");
+        this.noPointerEvents();
+        this.playAgain();
+      } else if (this["board" + i] == "OOO") { // если в одной из переменных три нолика, выиграли нолики
+        alert("Выиграли нолики!");
+        this.noPointerEvents();
+        this.playAgain();
+      } else if (this.everyCell.length == 9) { // если все поле занято и ни один if выше не сработал
         alert("Ничья!");
         this.noPointerEvents();
         this.playAgain();
+        break;
       }
+    }
   }
 
   /**
@@ -171,7 +161,7 @@ class WinnerOrLoser {
 }
 
 window.addEventListener("load", () => {
-  let boardGame = new Table();
+  // let boardGame = new Table();
   let listeners = new Game();
   let winser = new WinnerOrLoser();
 });
